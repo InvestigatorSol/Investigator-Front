@@ -1,4 +1,6 @@
+'use client';
 import { FileText, Globe2, AlertCircle, Vote, UserSearch } from "lucide-react"
+import { usePathname } from 'next/navigation'
 
 import {
     Sidebar,
@@ -15,32 +17,34 @@ import {
 const items = [
     {
         title: "Reputation System",
-        url: "#",
+        url: "/reputation",
         icon: Vote,
     },
     {
         title: "Insider Detection",
-        url: "#",
+        url: "/insider",
         icon: UserSearch,
     },
     {
         title: "Alerts System",
-        url: "#",
+        url: "/alerts",
         icon: AlertCircle,
     },
     {
         title: "Social Media Analysis",
-        url: "#",
+        url: "/social",
         icon: Globe2,
     },
     {
         title: "Token Reports",
-        url: "#",
+        url: "/reports",
         icon: FileText,
     },
 ]
 
 export function AppSidebar() {
+    const pathname = usePathname()
+
     return (
         <Sidebar>
             <SidebarContent>
@@ -48,16 +52,18 @@ export function AppSidebar() {
                     <SidebarGroupLabel className="h-[200px]"><img src="/assets/logo.png" width="100%" height="10px" /></SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
-                            {items.map((item) => (
-                                <SidebarMenuItem key={item.title}>
-                                    <SidebarMenuButton asChild>
-                                        <a href={item.url}>
-                                            <item.icon />
-                                            <span>{item.title}</span>
-                                        </a>
-                                    </SidebarMenuButton>
-                                </SidebarMenuItem>
-                            ))}
+                            {items.map((item) => {
+                                return (
+                                    <SidebarMenuItem key={item.title}>
+                                        <SidebarMenuButton asChild isActive={pathname === item.url}>
+                                            <a href={item.url}>
+                                                <item.icon />
+                                                <span>{item.title}</span>
+                                            </a>
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                )
+                            })}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
